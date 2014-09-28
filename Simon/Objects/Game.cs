@@ -5,9 +5,19 @@
 
     public class Game
     {
-        public Game(IEnumerable<SimonButton> buttons)
-        {
+        private readonly IEnumerable<SimonButton> _buttons;
 
+        public Game(params SimonButton[] buttons)
+        {
+            _buttons = buttons;
+        }
+
+        public void Blink() 
+        {
+            foreach (var button in _buttons)
+            {
+                button.Blink();
+            }
         }
     }
 }

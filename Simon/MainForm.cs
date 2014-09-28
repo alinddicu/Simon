@@ -1,4 +1,5 @@
 ﻿using Simon.Components;
+using Simon.Objects;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,6 +24,8 @@ namespace Simon
      */
     public partial class MainForm : Form
     {
+        #region Components
+
         private SimonButton buttonRed;
         private SimonButton buttonBlue;
         private SimonButton buttonGreen;
@@ -31,10 +34,16 @@ namespace Simon
         private FlowLayoutPanel flowLayoutPanel1;
         private FlowLayoutPanel flowLayoutPanel2;
 
+        #endregion
+
+        private readonly Game _game;
+
         public MainForm()
         {
             StartPosition= FormStartPosition.CenterScreen;
             InitializeComponent();
+
+            _game = new Game(buttonRed, buttonBlue, buttonGreen, buttonYellow);
         }
 
         #region InitializeComponent
@@ -45,15 +54,25 @@ namespace Simon
         /// </summary>
         private void InitializeComponent()
         {
-            this.buttonRed = new SimonButton();
-            this.buttonBlue = new SimonButton();
-            this.buttonGreen = new SimonButton();
-            this.buttonYellow = new SimonButton();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.buttonRed = new Simon.Components.SimonButton();
+            this.buttonBlue = new Simon.Components.SimonButton();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.buttonGreen = new Simon.Components.SimonButton();
+            this.buttonYellow = new Simon.Components.SimonButton();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Controls.Add(this.buttonRed);
+            this.flowLayoutPanel1.Controls.Add(this.buttonBlue);
+            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(384, 178);
+            this.flowLayoutPanel1.TabIndex = 4;
             // 
             // buttonRed
             // 
@@ -63,6 +82,7 @@ namespace Simon
             this.buttonRed.Size = new System.Drawing.Size(186, 175);
             this.buttonRed.TabIndex = 0;
             this.buttonRed.UseVisualStyleBackColor = false;
+            this.buttonRed.Click += new System.EventHandler(this.buttonRed_Click);
             // 
             // buttonBlue
             // 
@@ -72,6 +92,16 @@ namespace Simon
             this.buttonBlue.Size = new System.Drawing.Size(186, 175);
             this.buttonBlue.TabIndex = 1;
             this.buttonBlue.UseVisualStyleBackColor = false;
+            // 
+            // flowLayoutPanel2
+            // 
+            this.flowLayoutPanel2.Controls.Add(this.buttonGreen);
+            this.flowLayoutPanel2.Controls.Add(this.buttonYellow);
+            this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(0, 184);
+            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(384, 178);
+            this.flowLayoutPanel2.TabIndex = 5;
             // 
             // buttonGreen
             // 
@@ -91,26 +121,6 @@ namespace Simon
             this.buttonYellow.TabIndex = 3;
             this.buttonYellow.UseVisualStyleBackColor = false;
             // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.Controls.Add(this.buttonRed);
-            this.flowLayoutPanel1.Controls.Add(this.buttonBlue);
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(384, 178);
-            this.flowLayoutPanel1.TabIndex = 4;
-            // 
-            // flowLayoutPanel2
-            // 
-            this.flowLayoutPanel2.Controls.Add(this.buttonGreen);
-            this.flowLayoutPanel2.Controls.Add(this.buttonYellow);
-            this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(0, 184);
-            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(384, 178);
-            this.flowLayoutPanel2.TabIndex = 5;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -126,5 +136,10 @@ namespace Simon
         }
 
         #endregion
+
+        private void buttonRed_Click(object sender, EventArgs e)
+        {
+            ((SimonButton)sender).Blink();
+        }
     }
 }
