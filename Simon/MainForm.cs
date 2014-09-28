@@ -1,17 +1,11 @@
-﻿using Simon.Components;
-using Simon.Objects;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-namespace Simon
+﻿namespace Simon
 {
+    using Simon.Components;
+    using Simon.Objects;
+    using System;
+    using System.Drawing;
+    using System.Windows.Forms;
+
     /* Description: 
      * 
      * Four colored buttons light up in a specific pattern. 
@@ -42,6 +36,11 @@ namespace Simon
         {
             StartPosition= FormStartPosition.CenterScreen;
             InitializeComponent();
+
+            buttonRed.OriginalBackColor = Color.Red;
+            buttonBlue.OriginalBackColor = Color.Blue;
+            buttonGreen.OriginalBackColor = Color.Green;
+            buttonYellow.OriginalBackColor = Color.Yellow;
 
             _game = new Game(buttonRed, buttonBlue, buttonGreen, buttonYellow);
         }
@@ -79,16 +78,17 @@ namespace Simon
             this.buttonRed.BackColor = System.Drawing.Color.Red;
             this.buttonRed.Location = new System.Drawing.Point(3, 3);
             this.buttonRed.Name = "buttonRed";
+            this.buttonRed.OriginalBackColor = System.Drawing.Color.Empty;
             this.buttonRed.Size = new System.Drawing.Size(186, 175);
             this.buttonRed.TabIndex = 0;
             this.buttonRed.UseVisualStyleBackColor = false;
-            this.buttonRed.Click += new System.EventHandler(this.buttonRed_Click);
             // 
             // buttonBlue
             // 
             this.buttonBlue.BackColor = System.Drawing.Color.Blue;
             this.buttonBlue.Location = new System.Drawing.Point(195, 3);
             this.buttonBlue.Name = "buttonBlue";
+            this.buttonBlue.OriginalBackColor = System.Drawing.Color.Empty;
             this.buttonBlue.Size = new System.Drawing.Size(186, 175);
             this.buttonBlue.TabIndex = 1;
             this.buttonBlue.UseVisualStyleBackColor = false;
@@ -108,6 +108,7 @@ namespace Simon
             this.buttonGreen.BackColor = System.Drawing.Color.Green;
             this.buttonGreen.Location = new System.Drawing.Point(3, 3);
             this.buttonGreen.Name = "buttonGreen";
+            this.buttonGreen.OriginalBackColor = System.Drawing.Color.Empty;
             this.buttonGreen.Size = new System.Drawing.Size(186, 175);
             this.buttonGreen.TabIndex = 2;
             this.buttonGreen.UseVisualStyleBackColor = false;
@@ -117,6 +118,7 @@ namespace Simon
             this.buttonYellow.BackColor = System.Drawing.Color.Yellow;
             this.buttonYellow.Location = new System.Drawing.Point(195, 3);
             this.buttonYellow.Name = "buttonYellow";
+            this.buttonYellow.OriginalBackColor = System.Drawing.Color.Empty;
             this.buttonYellow.Size = new System.Drawing.Size(186, 175);
             this.buttonYellow.TabIndex = 3;
             this.buttonYellow.UseVisualStyleBackColor = false;
@@ -130,16 +132,18 @@ namespace Simon
             this.Controls.Add(this.flowLayoutPanel1);
             this.Name = "MainForm";
             this.Text = "Simon";
+            this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel2.ResumeLayout(false);
             this.ResumeLayout(false);
+
         }
 
         #endregion
 
-        private void buttonRed_Click(object sender, EventArgs e)
+        private void MainForm_Shown(object sender, EventArgs e)
         {
-            ((SimonButton)sender).Blink();
+            _game.Blink();
         }
     }
 }
