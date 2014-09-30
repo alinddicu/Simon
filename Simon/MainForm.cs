@@ -3,6 +3,7 @@
     using Simon.Components;
     using Simon.Objects;
     using System;
+    using System.Collections.Generic;
     using System.Drawing;
     using System.Windows.Forms;
 
@@ -30,19 +31,21 @@
 
         #endregion
 
-        private readonly Game _game;
+        private Turn _turn;
+        private readonly IEnumerable<SimonButton> _buttons;
 
         public MainForm()
         {
             StartPosition= FormStartPosition.CenterScreen;
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
             InitializeComponent();
+            _buttons = new List<SimonButton> { buttonRed, buttonBlue, buttonGreen, buttonYellow };
 
             buttonRed.OriginalBackColor = Color.Red;
             buttonBlue.OriginalBackColor = Color.Blue;
             buttonGreen.OriginalBackColor = Color.Green;
             buttonYellow.OriginalBackColor = Color.Yellow;
-
-            _game = new Game(buttonRed, buttonBlue, buttonGreen, buttonYellow);
         }
 
         #region InitializeComponent
@@ -143,7 +146,9 @@
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
-            _game.Blink(Color.Red, Color.Red, Color.Blue, Color.Yellow, Color.Green, Color.Yellow, Color.Green, Color.Green);
+            var playColors = new[] { Color.Red, Color.Green, Color.Yellow, Color.Blue };
+            _turn = new Turn(_buttons, playColors);
+            _turn.Blink();
         }
     }
 }

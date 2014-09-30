@@ -7,7 +7,7 @@
     using System.Timers;
     using System.Drawing;
 
-    public class Game
+    public class Turn
     {
         private readonly List<SimonButton> _buttons;
         private List<Color> _playColors;
@@ -15,9 +15,10 @@
 
         private readonly System.Timers.Timer _aTimer = new System.Timers.Timer(10000);
 
-        public Game(params SimonButton[] buttons)
+        public Turn(IEnumerable<SimonButton> buttons, params Color[] playColors)
         {
             _buttons = buttons.ToList();
+            _playColors = playColors.ToList();
             _aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
 
             _aTimer.Interval = 1500;
@@ -37,9 +38,8 @@
 
         }
 
-        public void Blink(params Color[] playColors)
+        public void Blink()
         {
-            _playColors = playColors.ToList();
             _aTimer.Enabled = true;
         }
     }
