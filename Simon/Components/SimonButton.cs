@@ -29,5 +29,40 @@
             BackColor = Color.Plum;
             aTimer.Enabled = true;
         }
+
+        private bool Equals(SimonButton other)
+        {
+            return Equals(OriginalBackColor, other.OriginalBackColor);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            return obj.GetType() == this.GetType() && this.Equals((SimonButton)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return OriginalBackColor.GetHashCode();
+        }
+
+        public static bool operator ==(SimonButton left, SimonButton right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(SimonButton left, SimonButton right)
+        {
+            return !Equals(left, right);
+        }
     }
 }

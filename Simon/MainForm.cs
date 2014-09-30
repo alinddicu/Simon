@@ -143,7 +143,7 @@
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
-            _game.Blink();
+            _game.Blink(Color.Red, Color.Red, Color.Blue, Color.Yellow, Color.Green, Color.Yellow, Color.Green, Color.Green);
         }
     }
 }
