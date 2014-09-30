@@ -12,7 +12,6 @@
         private readonly List<SimonButton> _buttons;
         private List<Color> _playColors;
         private int _currentPlayColorIndex;
-        private readonly object _lock = new object();
 
         private readonly System.Timers.Timer _aTimer = new System.Timers.Timer(10000);
 
@@ -26,18 +25,16 @@
 
         private void OnTimedEvent(object source, ElapsedEventArgs e)
         {
-            lock (_lock)
+            if (_currentPlayColorIndex < _playColors.Count())
             {
-                if (_currentPlayColorIndex < _playColors.Count())
-                {
-                    _buttons.First(b => b.OriginalBackColor == _playColors[_currentPlayColorIndex]).Blink();
-                    _currentPlayColorIndex++;
-                }
-                else
-                {
-                    _aTimer.Enabled = false;
-                }
+                _buttons.First(b => b.OriginalBackColor == _playColors[_currentPlayColorIndex]).Blink();
+                _currentPlayColorIndex++;
             }
+            else
+            {
+                _aTimer.Enabled = false;
+            }
+
         }
 
         public void Blink(params Color[] playColors)
